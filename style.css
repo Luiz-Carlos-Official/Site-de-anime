@@ -1,53 +1,281 @@
 @charset "UTF-8";
 
-body{
-    background-color: gray;
+/* ========== RESET BÁSICO ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-p {
-    text-align: justify;
+body {
     font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-h1 {
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    font-weight: bold;
-}
-
-
-h2 {
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    font-weight: bold;
-}
-
-div > a{
-    padding: 10px;
-    margin: 5px;
-    text-decoration: none;
-    background-color: rgb(103, 102, 102);
-    color: white;
-
-}
-
+/* ========== HEADER ========== */
 header {
-    background-color: white;
-    padding: 50px;
-    width: 50vw;
-    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    color: #fff;
+    padding: 1rem;
 }
 
+header h1 {
+    font-size: 1.2rem;
+}
+
+header div {
+    display: flex;
+    gap: 1rem;
+}
+
+header a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+header a:hover {
+    color: #ff4444;
+}
+
+/* ========== MAIN ========== */
 main {
-    padding: 50px;
-    background-color: white;
-    margin: auto;
-    width: 50vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    flex: 1;
 }
 
+main h2 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+/* ========== FOOTER ========== */
 footer {
-    padding: 50px;
-    background-color: white;
-    margin: auto;
-    width: 50vw;
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+/* ========== RESPONSIVIDADE ========== */
+
+/* Tela pequena (Mobile First) já está configurada acima */
+
+/* ≥ 480px */
+@media (min-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    main {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* ≥ 768px (tablets) */
+@media (min-width: 768px) {
+    main {
+        grid-template-columns: 2fr 1fr;
+        grid-auto-rows: minmax(200px, auto);
+    }
+
+    main h2, main p {
+        padding: 0.5rem;
+    }
+}
+
+/* ≥ 1024px (laptops) */
+@media (min-width: 1024px) {
+    header {
+        padding: 1.5rem 3rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        gap: 2rem;
+    }
+
+    footer {
+        font-size: 1rem;
+    }
+}
+
+/* ≥ 1200px (desktops grandes) */
+@media (min-width: 1200px) {
+    main {
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas: 
+            "texto1 img"
+            "texto2 iframe";
+    }
+
+    main h2:nth-of-type(1),
+    main p:nth-of-type(1) {
+        grid-area: texto1;
+    }
+
+    main h2:nth-of-type(2),
+    main p:nth-of-type(2) {
+        grid-area: texto2;
+    }
+
+    main h2:nth-of-type(3),
+    main p:nth-of-type(3) {
+        grid-area: iframe;
+    }
+}
+
+/* ≥ 1400px (monitores ultrawide) */
+@media (min-width: 1400px) {
+    body {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    main {
+        gap: 3rem;
+        padding: 2rem;
+    }
+
+    header div {
+        gap: 2rem;
+    }
+}
+
+/* ===== MENU RESPONSIVO ===== */
+.menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+header div.active {
+    display: flex;
+    flex-direction: column;
+    background: #333;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 1rem;
+    border-radius: 8px;
+}
+@media (max-width: 768px) {
+    header div {
+        display: none;
+    }
+    .menu-btn {
+        display: block;
+    }
+}
+
+/* ===== MODO ESCURO ===== */
+.dark-mode {
+    background: #111;
+    color: #eee;
+}
+.dark-mode header, 
+.dark-mode footer {
+    background: #000;
+}
+.dark-mode main section {
+    background: #222;
+    color: #ddd;
+}
+
+/* ===== BOTÃO VOLTAR AO TOPO ===== */
+.top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #222;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+.top-btn.show {
+    display: block;
+}
+
+/* ===== ANIMAÇÕES ===== */
+main section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+main section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== DIGITAÇÃO ===== */
+header h1 {
+    border-right: 2px solid #fff;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* ===== CARROSSEL ===== */
+.imagem img {
+    width: 100%;
+    border-radius: 8px;
+    transition: opacity 1s ease;
+}
+
+/* ===== CONTADOR ===== */
+.contador {
+    margin: 2rem 0;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* ===== COMENTÁRIOS ===== */
+.comments {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+}
+.comments textarea {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+.comments button {
+    padding: 0.5rem 1rem;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.comments button:hover {
+    background: #444;
+}
+.comments #commentList {
+    margin-top: 1rem;
 }
